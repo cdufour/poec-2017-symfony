@@ -16,4 +16,14 @@
             </li>
         {% endfor %}
     </ul>
+    <ul>
+        {% for player in players %}
+            <li>
+                {{player.nom}}
+                {% if player.age > 29 %}
+                    <span> (trentenaire)</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
