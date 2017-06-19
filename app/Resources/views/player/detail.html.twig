@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <h1>Fiche détaillée joueur</h1>
+   <p>Nom: {{player.nom}}</p>
+   <p>Prénom: {{player.prenom}}</p>
+   <p>Age: {{player.age}}</p>
+
+   {% if player.numeroMaillot != 0 %}
+   <p>Numéro: {{player.numeroMaillot}}</p>
+   {% endif %}
+
+{% endblock %}

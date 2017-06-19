@@ -16,14 +16,28 @@
             </li>
         {% endfor %}
     </ul>
-    <ul>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Age</th>
+            <th>Numéro</th>
+        </tr>
         {% for player in players %}
-            <li>
-                {{player.nom}}
-                {% if player.age > 29 %}
+            <tr>
+                <td>
+                    <a href="player/{{player.id}}">{{player.nom}}</a>
+                </td>
+                <td>{{player.prenom}}</td>
+                <td>
+                    {{player.age}}
+                    {% if player.age > 29 %}
                     <span> (trentenaire)</span>
-                {% endif %}
-            </li>
+                    {% endif %}
+                </td>
+                <td>{{player.numeroMaillot}}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}
