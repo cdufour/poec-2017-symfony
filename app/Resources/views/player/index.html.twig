@@ -32,7 +32,7 @@
                 <td>{{player.prenom}}</td>
                 <td>
                     {{player.age}}
-                    {% if player.age > 29 %}
+                    {% if player.age > 29 and player.age < 40 %}
                     <span> (trentenaire)</span>
                     {% endif %}
                 </td>

@@ -47,9 +47,9 @@ class PlayerController extends Controller
     }
 
     /**
-     * @Route("/player/add", name="addplayer")
+     * @Route("/test/player/add", name="testaddplayer")
      */
-    public function addAction(Request $request)
+    public function testAddAction(Request $request)
     {
         $player = new Player();
         $player->setNom("Diego Armando");
@@ -69,6 +69,32 @@ class PlayerController extends Controller
 
         // on DOIT retourner une réponse HTTP au client
         return new Response('joueur ajouté avec succès');
+    }
+
+    /**
+     * @Route("/player/add", name="addplayer")
+     */
+    public function addAction(Request $request)
+    {
+        // déterminer si cette route a été demandée en POST ou en GET
+        if ($request->isMethod('POST')) {
+            
+            $player = new Player();
+            $player->setNom($request->get('nom'));
+            $player->setPrenom($request->get('prenom'));
+            $player->setAge($request->get('age'));
+            $player->setNumeroMaillot($request->get('numero_maillot'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($player);
+            $em->flush();
+
+            // redirection vers la page d'accueil
+            return $this->redirectToRoute('homepage');
+        } else {
+            // Si la route est demandée en GET, on renvoie un formulaire
+            return $this->render('player/forms/add.html.twig');
+        }
     }
 
     /**
