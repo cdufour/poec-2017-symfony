@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Countries list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for country in countries %}
+            <tr>
+                <td><a href="{{ path('admin_country_show', { 'id': country.id }) }}">{{ country.id }}</a></td>
+                <td>{{ country.nom }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_country_show', { 'id': country.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_country_edit', { 'id': country.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_country_new') }}">Create a new country</a>
+        </li>
+    </ul>
+{% endblock %}

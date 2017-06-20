@@ -6,6 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+// import de la classe EntityType qui permet de générer un menu de sélection en l'alimentant à partir d'une classe (en l'occurence la classe Country)
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+
 class TeamType extends AbstractType
 {
     /**
@@ -13,7 +17,19 @@ class TeamType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('anneeCreation')->add('entraineur')->add('couleurs');
+        $builder
+            ->add('nom')
+            ->add('anneeCreation')
+            ->add('entraineur')
+            ->add('couleurs');
+
+        // ajout d'un menu de sélection pour les pays
+        // (à découvrir seul comme un grand: méthod statique/de classe en POO => EntityType::class)
+        $builder
+            ->add('country', EntityType::class, array(
+                'class' => 'AppBundle:Country',
+                'choice_label' => 'nom'
+            ));
     }
     
     /**

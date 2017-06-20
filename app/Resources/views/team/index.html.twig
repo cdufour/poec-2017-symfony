@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Liste des équipes</h1>
+    <h1>Teams list</h1>
 
-    <table class="table table-striped">
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -11,6 +11,7 @@
                 <th>Anneecreation</th>
                 <th>Entraineur</th>
                 <th>Couleurs</th>
+                <th>Pays</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,6 +23,13 @@
                 <td>{{ team.anneeCreation }}</td>
                 <td>{{ team.entraineur }}</td>
                 <td>{{ team.couleurs }}</td>
+                <td>
+                    {% if team.country %}
+                        {{ team.country.nom }}
+                    {% else %}
+                        <span>Pas de pays</span>
+                    {% endif %}
+                </td>
                 <td>
                     <ul>
                         <li>
