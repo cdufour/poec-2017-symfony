@@ -23,6 +23,7 @@
             <th>Prénom</th>
             <th>Age</th>
             <th>Numéro</th>
+            <th>Equipe</th>
         </tr>
         {% for player in players %}
             <tr>
@@ -37,6 +38,7 @@
                     {% endif %}
                 </td>
                 <td>{{player.numeroMaillot}}</td>
+                <td>{{player.equipe}}</td>
             </tr>
         {% endfor %}
     </table>

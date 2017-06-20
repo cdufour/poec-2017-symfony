@@ -47,7 +47,14 @@ class Player
      *
      * @ORM\Column(name="numero_maillot", type="integer")
      */
-    private $numero_maillot;
+    private $numeroMaillot;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="equipe", type="integer")
+     */
+    private $equipe;
 
 
     /**
@@ -133,27 +140,51 @@ class Player
     }
 
     /**
-     * Set numero_maillot
+     * Set numeroMaillot
      *
-     * @param integer $numero_maillot
+     * @param integer $numeroMaillot
      *
      * @return Player
      */
-    public function setNumeroMaillot($numero_maillot)
+    public function setNumeroMaillot($numeroMaillot)
     {
-        $this->numero_maillot = $numero_maillot;
+        $this->numeroMaillot = $numeroMaillot;
 
         return $this;
     }
 
     /**
-     * Get numero_maillot
+     * Get numeroMaillot
      *
      * @return int
      */
     public function getNumeroMaillot()
     {
-        return $this->numero_maillot;
+        return $this->numeroMaillot;
+    }
+
+    /**
+     * Set equipe
+     *
+     * @param integer $equipe
+     *
+     * @return Player
+     */
+    public function setEquipe($equipe)
+    {
+        $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return int
+     */
+    public function getEquipe()
+    {
+        return $this->equipe;
     }
 
 }

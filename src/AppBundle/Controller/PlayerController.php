@@ -84,6 +84,7 @@ class PlayerController extends Controller
             $player->setPrenom($request->get('prenom'));
             $player->setAge($request->get('age'));
             $player->setNumeroMaillot($request->get('numero_maillot'));
+            $player->setEquipe($request->get('equipe'));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($player);
@@ -92,8 +93,15 @@ class PlayerController extends Controller
             // redirection vers la page d'accueil
             return $this->redirectToRoute('homepage');
         } else {
+            // récupérer la liste des équipes
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('AppBundle:Team');
+            $teams = $repo->findAll();
+
             // Si la route est demandée en GET, on renvoie un formulaire
-            return $this->render('player/forms/add.html.twig');
+            return $this->render('player/forms/add.html.twig', array(
+                'teams' => $teams
+            ));
         }
     }
 

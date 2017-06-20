@@ -10,4 +10,6 @@ namespace AppBundle\Repository;
  */
 class PlayerRepository extends \Doctrine\ORM\EntityRepository
 {
+
+
 }
