@@ -30,12 +30,32 @@ class PlayerController extends Controller
         // le repository est un instrument (objet) permettant de récupérer les données
         // il propose de nombreuses méthodes de récupération
         // de données (ex: findAll(), findById(), etc.)
-        $repository = $this
+
+/*        $repository = $this
                         ->getDoctrine()
                         ->getManager()
-                        ->getRepository('AppBundle:Player');
+                        ->getRepository('AppBundle:Player');*/
 
-        $players = $repository->findAll();
+        //$players = $repository->findAll();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('
+            SELECT p
+            FROM AppBundle:Player p
+            WHERE p.age < :age
+        ')->setParameter('age', 100);
+
+        // requête personnalisée avec jointure
+        // A COMPLETER
+/*        $query = $em->createQuery('
+            SELECT p, t
+            FROM AppBundle:Player p
+            JOIN AppBundle:Team t
+            WHERE p.equipe = t.id
+        ');*/
+
+        $players = $query->getResult();
 
         return $this->render('player/index.html.twig', array(
             'title'         => $title,
@@ -113,23 +133,31 @@ class PlayerController extends Controller
         // ->getDoctrine()      Récupère l'ORM
         // ->getManager()       Outil pour opérations en écriture
         // ->getRepository()    Outils pour opération en lecture
-        $repository = $this
-                        ->getDoctrine()
-                        ->getManager()
-                        ->getRepository('AppBundle:Player');
+        $em = $this->getDoctrine()->getManager();
+        $playerRepo = $em->getRepository('AppBundle:Player');
+        $teamRepo   = $em->getRepository('AppBundle:Team');
 
         // récupération de l'id
         //$id = $request->query->get('id'); // renvoie NULL
         //var_dump($id);
 
         // trouver le joueur correspondant en base de données
-        $player = $repository->find($id); // find() == findById() cherche toujours dans la colonne id de la table sql
+        $player = $playerRepo->find($id); // find() == findById() cherche toujours dans la colonne id de la table sql
 
+        $teamId = $player->getEquipe();
+
+        if ($teamId != 0) {
+            $teamName = $teamRepo->find($teamId)->getNom();
+        } else {
+            $teamName = 'Sans équipe';
+        }
+        
         // Afficher les informations via une vue/template (fichier twig)
         // render() associe la vue (fichier .twig) passé en premier argument avec le tableau associatif passé en deuxième argument
         // Les données que le controller fournit à la vue seront accessibles (affichables, itérables, etc) par cette dernière
         return $this->render('player/detail.html.twig', array(
-            'player' => $player
+            'player'    => $player,
+            'teamName'  => $teamName
         ));
     }
 
