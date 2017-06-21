@@ -1,0 +1,33 @@
+**************************
+Dans le fichier player/detail.html.twig
+
+Afficher le numéro de maillot du joueur uniquement s'il est différent de 0
+**************************
+
+
+**************************
+Dans le fichier player/index.html.twig
+
+Transformer en tableau (stylisé bootstrap) la deuxième liste à puces (joueurs provenant de la base de données)
+**************************
+
+
+**************************
+Générer un entité (un model) AppBundle:Team
+
+Avec les propriétés suivantes:
+- nom, string
+- année de création, integer
+- entraîneur, string
+- couleurs, string
+
+Mettre le schéma de la base de données à jour de manière à que la table "team" soit ajoutée à la base
+**************************
+
+
+**************************
+Afficher le nom de l'équipe dans la fiche du joueur
+
+Aide: à partir du champ équipe du joueur, interroger la base de données pour obtenir le nom de cette équipe
+**************************
+

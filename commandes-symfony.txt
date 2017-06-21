@@ -1,0 +1,16 @@
+### Important : en mode console, se placer dans le dossier content l'application symfony ###
+
+# démarrage du serveur
+php bin/console server:run
+
+# création de la base de données
+php bin/console doctrine:database:create
+
+# génération d'une entité
+php bin/console doctrine:generate:entity
+
+# mise à jour du schéma (structure) de la base de données
+php bin/console doctrine:schema:update --force
+
+# génération d'une interface CRUD pour l'entité choisie
+php bin/console doctrine:generate:crud

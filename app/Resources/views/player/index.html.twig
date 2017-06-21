@@ -38,7 +38,13 @@
                     {% endif %}
                 </td>
                 <td>{{player.numeroMaillot}}</td>
-                <td>{{player.equipe}}</td>
+                <td>
+                {% if player.equipe %}
+                    {{ player.equipe.nom }}
+                {% else %}
+                    Sans équipe
+                {% endif %}
+                </td>
             </tr>
         {% endfor %}
     </table>
