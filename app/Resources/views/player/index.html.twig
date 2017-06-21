@@ -6,6 +6,9 @@
     <h1>{{title}}</h1>
     <p>{{message}}</p>
     <p>{{joueur1.nom}} est âgé de {{joueur1.age}} ans</p>
+
+    <div id="popup">Popup</div>
+    <button id="btnTest">Test</button>
     <ul>
         {% for joueur in joueurs %}
             <li>
@@ -48,4 +51,10 @@
             </tr>
         {% endfor %}
     </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/zepto.min.js') }}"></script>
+    <script src="{{ asset('js/fx.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 {% endblock %}

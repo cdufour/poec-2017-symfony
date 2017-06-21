@@ -54,22 +54,12 @@ class PlayerController extends Controller
         //$players = $repository->findAll();
 
         $em = $this->getDoctrine()->getManager();
+        $playerRepo = $em->getRepository('AppBundle:Player');
 
-        $query = $em->createQuery('
-            SELECT p
-            FROM AppBundle:Player p
-            WHERE p.age < :age
-        ')->setParameter('age', 100);
-
-        // requête personnalisée avec jointure
-        // A COMPLETER
-/*        $query = $em->createQuery('
-            SELECT p, t
-            FROM AppBundle:Player p
-            LEFT JOIN AppBundle:Team t
-        ');
-*/
-        $players = $query->getResult();
+        // listing peut être appelée avec ou sans argument.
+        // Sans argument spécifié, la valeur par défaut (100) sera appliquée
+        $players = $playerRepo->listing();
+        //$players = $playerRepo->listing($age = 30);
 
         return $this->render('player/index.html.twig', array(
             'title'         => $title,

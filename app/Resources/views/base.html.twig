@@ -5,7 +5,15 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!--         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <link 
+            rel="stylesheet" 
+            type="text/css" 
+            href="{{ asset('css/bootstrap.min.css') }}">
+        <link 
+            rel="stylesheet" 
+            type="text/css" 
+            href="{{ asset('css/styles.css') }}">
     </head>
     <body>
         <nav>

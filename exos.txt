@@ -31,3 +31,9 @@ Afficher le nom de l'équipe dans la fiche du joueur
 Aide: à partir du champ équipe du joueur, interroger la base de données pour obtenir le nom de cette équipe
 **************************
 
+
+**************************
+Depuis le template base.html.twig, charger le fichier bootstrap.min.css en local (asset)
+**************************
+
+
