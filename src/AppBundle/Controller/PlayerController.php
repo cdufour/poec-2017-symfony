@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+// classes servant à la sérialisation (passage d'objet à chaîne de caractères)
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -70,30 +71,41 @@ class PlayerController extends Controller
         ));
     }
 
+
     /**
      * @Route("/json/players")
      */
     public function jsonIndexAction(Request $request)
     {
-        $encoder = array(new JsonEncoder());
-        $normalizer = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizer, $encoder);
-
         $em = $this->getDoctrine()->getManager();
-        $repoPlayer = $em->getRepository('AppBundle:Player');
-        $players = $repoPlayer->findAll();
+        $playerRepo = $em->getRepository('AppBundle:Player');
+        $players = $playerRepo->listing();
 
-        $jsonContent = $serializer->serialize($players, 'json');
+        // Impératif: encoder le tableau d'objets Player en json
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
 
+        $jsonPlayers = $serializer->serialize($players, 'json');
         $res = new Response();
-        $res->setContent($jsonContent);
-        $res->headers->set('Content-Type', 'application/json');
+
+        // on autorise les requêtes provenant d'une origine différente (cross-domain). Ici, symfony "tourne" sur le port 8000, on autorise le traitement de requêtes provenant du port 80 (localhost:80)
         $res->headers->set('Access-Control-Allow-Origin', 'http://localhost');
-  
+
+        $res->headers->set('allow_headers', ['Authorization', 'X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'X-Custom-Auth']);
+ 
+        $res->headers->set('allow_methods', ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']);
+
+        // json_encode fonctionne sur un tableau assocatif.
+        // mais ne parvient pas à encoder correctement un objet
+        //$res->setContent(json_encode($players));
+        $res->setContent($jsonPlayers);
+
         return $res;
+
     }
 
-  
+
 
     /**
      * @Route("/test/player/add", name="testaddplayer")
@@ -125,6 +137,8 @@ class PlayerController extends Controller
      */
     public function addAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         // déterminer si cette route a été demandée en POST ou en GET
         if ($request->isMethod('POST')) {
             
@@ -133,9 +147,12 @@ class PlayerController extends Controller
             $player->setPrenom($request->get('prenom'));
             $player->setAge($request->get('age'));
             $player->setNumeroMaillot($request->get('numero_maillot'));
-            $player->setEquipe($request->get('equipe'));
 
-            $em = $this->getDoctrine()->getManager();
+            $teamRepo = $em->getRepository('AppBundle:Team');
+            $team = $teamRepo->find($request->get('equipe'));
+
+            $player->setEquipe($team);
+            
             $em->persist($player);
             $em->flush();
 
@@ -143,7 +160,6 @@ class PlayerController extends Controller
             return $this->redirectToRoute('homepage');
         } else {
             // récupérer la liste des équipes
-            $em = $this->getDoctrine()->getManager();
             $repo = $em->getRepository('AppBundle:Team');
             $teams = $repo->findAll();
 
